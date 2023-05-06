@@ -1,5 +1,5 @@
-import express from 'express';
 import "dotenv/config";
+import express from 'express';
 import bodyParser from 'body-parser';
 import conntion from './baza/db.js'
 
