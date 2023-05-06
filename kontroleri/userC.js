@@ -2,6 +2,7 @@ import "dotenv/config";
 import asyncHandler from "express-async-handler"
 import userModel from "../modeli/user.js"
 
+//DODATI ERRORE
 
 //Pravi usera
 let createUser = asyncHandler(async (req,res)=>{
@@ -18,6 +19,8 @@ let createUser = asyncHandler(async (req,res)=>{
         message: "User napravljen"
     })
 })
+
+
 
 
 export { createUser }
