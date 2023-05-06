@@ -1,7 +1,7 @@
 import "dotenv/config";
 import asyncHandler from "express-async-handler"
 import userModel from "../modeli/user.js"
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 //DODATI ERRORE
 
@@ -20,38 +20,40 @@ let loginUser = asyncHandler(async (req,res) =>{
                 username: user.username,
                 password: user.password
             }
-        },process.env.JWT_TOKEN,{ expiresIn: "2m"});
+        },process.env.JWT_SECRET,{ expiresIn: "10m"});
         res.status(200).json(accT); 
     }
 
 });
 
-let verifyToken = asyncHandler (async (req, res, next) => {
-    let token;
-    let oathHeader = req.headers.authorization
-    if(oathHeader == undefined){
-        res.status(401).json({
-            message: "Niste ulogovani"
-        })
-    }else{
-        if(oathHeader && oathHeader.startsWith("Bearer")){
-            token = oathHeader.split(" ")[1];
-            jwt.verify(token,process.env.JWT_TOKEN,(err,user) => {
-                if(err) {
-                    res.status(401);
-                }else{
-                    req.body = user;
-                    next();
-                }
-            });
-        }
-    }
+// let verifyToken = asyncHandler (async (req, res, next) => {
+//     let token;
+//     let oathHeader = req.headers.authorization
+//     if(oathHeader == undefined){
+//         res.status(401).json({
+//             message: "Niste ulogovani"
+//         })
+//     }else{
+//         if(oathHeader && oathHeader.startsWith("Bearer")){
+//             token = oathHeader.split(" ")[1];
+//             jwt.verify(token,process.env.JWT_TOKEN,(err,user) => {
+//                 if(err) {
+//                     res.status(401);
+//                 }else{
+//                     req.body = user;
+//                     next();
+//                 }
+//             });
+//         }
+//     }
 
-})
+// })
 
 //Varaca usera
 let getUser = asyncHandler(async (req,res)=>{   //Get users
-    res.json(req.body.user);
+    res.status(200).json(req.body);
+
+    console.log(req.body);
 })
 
 //Pravi usera
@@ -73,4 +75,4 @@ let createUser = asyncHandler(async (req,res)=>{
 
 
 
-export { createUser,loginUser,getUser,verifyToken }
+export { createUser,loginUser,getUser }
